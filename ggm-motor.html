@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GGM Motor – Servis Panggilan Mobil & Motor</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #D32F2F;
+    --red-dark: #B71C1C;
+    --red-light: #FFEBEE;
+    --red-mid: #EF5350;
+    --black: #1A1A1A;
+    --gray-dark: #2C2C2C;
+    --gray-mid: #5C5C5C;
+    --gray-light: #F5F5F5;
+    --white: #FFFFFF;
+    --accent: #FFC107;
+    --border: rgba(0,0,0,0.09);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: var(--black);
+    z-index: 100;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-logo span { color: var(--red-mid); }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--red-dark) !important; color: var(--white) !important; }
+
+  /* HERO */
+  .hero {
+    background: var(--black);
+    color: var(--white);
+    padding: 80px 5% 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: 520px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 70% 50%, rgba(211,47,47,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(211,47,47,0.2);
+    border: 1px solid rgba(211,47,47,0.4);
+    color: var(--red-mid);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--red-mid);
+    border-radius: 50%;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.75); }
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span { color: var(--red-mid); }
+
+  .hero p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 36px;
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: var(--white);
+    padding: 14px 26px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    padding: 14px 26px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.25);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06); }
+
+  /* hero visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+  }
+
+  .hero-svg-wrap {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  /* STATS STRIP */
+  .stats-strip {
+    background: var(--red);
+    padding: 28px 5%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .stat-item {
+    text-align: center;
+    color: var(--white);
+    border-right: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 0;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* LAYANAN */
+  .section {
+    padding: 80px 5%;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-tag {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--red);
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 3.5vw, 40px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    color: var(--black);
+    margin-bottom: 14px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--gray-mid);
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 12px 40px rgba(211,47,47,0.1);
+    transform: translateY(-3px);
+    border-color: rgba(211,47,47,0.3);
+  }
+
+  .service-icon {
+    width: 52px; height: 52px;
+    background: var(--red-light);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .service-icon svg { width: 28px; height: 28px; color: var(--red); fill: none; }
+
+  .service-card h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+
+  .service-card p {
+    font-size: 14px;
+    color: var(--gray-mid);
+    line-height: 1.65;
+  }
+
+  .service-badge {
+    position: absolute;
+    top: 18px; right: 18px;
+    background: var(--red);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* KEUNGGULAN */
+  .features-section {
+    background: var(--gray-light);
+    padding: 80px 5%;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .feature-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--red);
+    min-width: 30px;
+    padding-top: 2px;
+  }
+
+  .feature-content h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--black);
+  }
+
+  .feature-content p {
+    font-size: 14px;
+    color: var(--gray-mid);
+    line-height: 1.6;
+  }
+
+  .features-visual {
+    background: var(--black);
+    border-radius: 20px;
+    padding: 40px 36px;
+    color: var(--white);
+  }
+
+  .fv-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .fv-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 32px;
+  }
+
+  .step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding-bottom: 24px;
+    position: relative;
+  }
+
+  .step:last-child { padding-bottom: 0; }
+
+  .step::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 34px;
+    width: 2px;
+    height: calc(100% - 34px);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .step:last-child::after { display: none; }
+
+  .step-dot {
+    width: 32px; height: 32px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--white);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  .step-text h5 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 3px;
+    padding-top: 5px;
+  }
+
+  .step-text p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* HARGA */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .price-card {
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 30px 24px;
+    position: relative;
+  }
+
+  .price-card.featured {
+    border-color: var(--red);
+    background: #FFF5F5;
+  }
+
+  .price-tag-top {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--red);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .price-featured-badge {
+    background: var(--red);
+    color: var(--white);
+    font-size: 9px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .price-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--black);
+  }
+
+  .price-amount {
+    font-family: 'Syne', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--black);
+    margin-bottom: 4px;
+  }
+
+  .price-note {
+    font-size: 12px;
+    color: var(--gray-mid);
+    margin-bottom: 22px;
+  }
+
+  .price-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-bottom: 24px;
+  }
+
+  .price-list li {
+    font-size: 14px;
+    color: var(--gray-dark);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .price-list li::before {
+    content: '✓';
+    color: var(--red);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .price-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s;
+  }
+
+  .price-cta-primary {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  .price-cta-primary:hover { background: var(--red-dark); }
+
+  .price-cta-secondary {
+    border: 1.5px solid var(--border);
+    color: var(--black);
+  }
+
+  .price-cta-secondary:hover { border-color: var(--red); color: var(--red); }
+
+  /* AREA */
+  .area-section { padding: 80px 5%; background: var(--black); }
+
+  .area-section .section-title { color: var(--white); }
+
+  .area-section .section-sub { color: rgba(255,255,255,0.5); }
+
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  .area-chip {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+  }
+
+  .area-chip:hover {
+    background: rgba(211,47,47,0.15);
+    border-color: rgba(211,47,47,0.4);
+  }
+
+  .area-chip-dot {
+    width: 8px; height: 8px;
+    background: var(--red-mid);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .area-chip span {
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.8);
+  }
+
+  /* KONTAK */
+  .contact-section {
+    padding: 80px 5%;
+    background: var(--white);
+  }
+
+  .contact-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .contact-inner .section-title { text-align: center; }
+
+  .contact-inner .section-sub {
+    margin: 0 auto 48px;
+    text-align: center;
+  }
+
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .contact-card {
+    background: var(--gray-light);
+    border-radius: 14px;
+    padding: 26px 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .contact-icon {
+    width: 48px; height: 48px;
+    background: var(--red-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+  }
+
+  .contact-icon svg { width: 24px; height: 24px; color: var(--red); fill: none; }
+
+  .contact-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--gray-mid);
+    margin-bottom: 6px;
+  }
+
+  .contact-card p, .contact-card a {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .contact-card a:hover { color: var(--red); }
+
+  .wa-big {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: #25D366;
+    color: var(--white);
+    padding: 18px 36px;
+    border-radius: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    text-decoration: none;
+    transition: 0.2s;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.25);
+  }
+
+  .wa-big:hover {
+    background: #1EB457;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(37,211,102,0.35);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 40px 5%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+  }
+
+  .footer-brand .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .footer-brand .logo-text span { color: var(--red-mid); }
+
+  .footer-brand p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.7;
+    max-width: 260px;
+  }
+
+  footer h5 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 16px;
+  }
+
+  footer ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  footer ul a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer ul a:hover { color: var(--white); }
+
+  .footer-bottom {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 18px 5%;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* Hamburger mobile */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: 0.3s;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      padding-top: 50px;
+      min-height: auto;
+    }
+
+    .hero-visual { display: none; }
+
+    .stats-strip { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .features-grid { grid-template-columns: 1fr; }
+
+    footer { grid-template-columns: 1fr; gap: 28px; }
+
+    .area-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">GGM<span>MOTOR</span></div>
+  <ul class="nav-links">
+    <li><a href="#layanan">Layanan</a></li>
+    <li><a href="#keunggulan">Keunggulan</a></li>
+    <li><a href="#harga">Harga</a></li>
+    <li><a href="#area">Area</a></li>
+    <li><a href="#kontak" class="nav-cta">Hubungi Kami</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">Servis Panggilan 24 Jam</div>
+    <h1>Bengkel Datang<br>ke <span>Lokasi Anda</span></h1>
+    <p>GGM Motor hadir langsung ke tempat Anda. Mekanik berpengalaman siap menangani mobil dan motor Anda — cepat, terpercaya, tanpa biaya jarak.</p>
+    <div class="hero-buttons">
+      <a href="https://wa.me/6208561485265?text=Halo%20GGM%20Motor%2C%20saya%20butuh%20servis%20panggilan" class="btn-primary" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.516 3.659 1.412 5.178L2.05 22l4.96-1.302A9.963 9.963 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.336-1.276l-.311-.188-3.227.848.861-3.142-.203-.323A8 8 0 1112 20z"/></svg>
+        Chat WhatsApp
+      </a>
+      <a href="#layanan" class="btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 16 12 12 16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Lihat Layanan
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-svg-wrap">
+      <svg viewBox="0 0 420 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- wrench icon big -->
+        <rect x="60" y="50" width="300" height="280" rx="24" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+        <!-- car silhouette -->
+        <rect x="90" y="160" width="240" height="90" rx="10" fill="rgba(211,47,47,0.15)" stroke="#D32F2F" stroke-width="1.5"/>
+        <path d="M 110 160 L 140 120 L 280 120 L 310 160" fill="rgba(211,47,47,0.1)" stroke="#D32F2F" stroke-width="1.5"/>
+        <circle cx="140" cy="255" r="22" fill="#1A1A1A" stroke="#D32F2F" stroke-width="2"/>
+        <circle cx="140" cy="255" r="10" fill="#2C2C2C" stroke="rgba(211,47,47,0.5)" stroke-width="1"/>
+        <circle cx="280" cy="255" r="22" fill="#1A1A1A" stroke="#D32F2F" stroke-width="2"/>
+        <circle cx="280" cy="255" r="10" fill="#2C2C2C" stroke="rgba(211,47,47,0.5)" stroke-width="1"/>
+        <!-- window -->
+        <path d="M 145 155 L 162 125 L 258 125 L 275 155 Z" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <!-- wrench -->
+        <g transform="translate(310,60) rotate(45)">
+          <rect x="0" y="-6" width="60" height="12" rx="6" fill="#D32F2F" opacity="0.9"/>
+          <circle cx="0" cy="0" r="12" fill="none" stroke="#D32F2F" stroke-width="5" opacity="0.9"/>
+          <circle cx="60" cy="0" r="9" fill="none" stroke="#D32F2F" stroke-width="5" opacity="0.9"/>
+        </g>
+        <!-- signal -->
+        <circle cx="340" cy="100" r="4" fill="#FFC107"/>
+        <circle cx="340" cy="100" r="12" fill="none" stroke="#FFC107" stroke-width="1.5" opacity="0.5"/>
+        <circle cx="340" cy="100" r="22" fill="none" stroke="#FFC107" stroke-width="1" opacity="0.25"/>
+        <!-- label -->
+        <text x="210" y="310" text-anchor="middle" font-family="Inter" font-size="13" font-weight="600" fill="rgba(255,255,255,0.4)">MEKANIK DATANG KE ANDA</text>
+        <line x1="90" y1="317" x2="160" y2="317" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <line x1="260" y1="317" x2="330" y2="317" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num">500+</div>
+    <div class="stat-label">Pelanggan Puas</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Siap Melayani</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">30 Mnt</div>
+    <div class="stat-label">Waktu Respons</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Bergaransi</div>
+  </div>
+</div>
+
+<!-- LAYANAN -->
+<section class="section" id="layanan">
+  <div class="section-header">
+    <span class="section-tag">Layanan Kami</span>
+    <h2 class="section-title">Semua Masalah Kendaraan,<br>Kami Tangani</h2>
+    <p class="section-sub">Mulai dari perawatan rutin hingga perbaikan darurat, mekanik kami hadir langsung ke lokasi Anda.</p>
+  </div>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-badge">POPULER</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </div>
+      <h3>Servis Mobil</h3>
+      <p>Tune-up, ganti oli, pengecekan mesin, rem, AC, aki, dan lebih banyak lagi. Dikerjakan langsung di lokasi Anda.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+        </svg>
+      </div>
+      <h3>Servis Motor</h3>
+      <p>Ganti oli mesin, busi, filter udara, rantai, ban, karburator, injeksi, dan servis berkala motor Anda.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+      </div>
+      <h3>Servis Kelistrikan</h3>
+      <p>Aki lemah, dinamo, klakson, lampu, sekring, sistem starter dan kelistrikan kendaraan lainnya.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>
+        </svg>
+      </div>
+      <h3>Ganti Ban</h3>
+      <p>Tambal ban tubeless, ganti ban baru, spooring dan balancing tersedia untuk mobil maupun motor.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-badge">DARURAT</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <h3>Derek & Darurat</h3>
+      <p>Kendaraan mogok di jalan? Kami siap membantu 24 jam. Layanan derek dan penanganan darurat cepat.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+        </svg>
+      </div>
+      <h3>Perawatan Berkala</h3>
+      <p>Jadwalkan servis berkala kendaraan Anda. Kami catat histori servis dan ingatkan waktu perawatan berikutnya.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- KEUNGGULAN -->
+<section class="features-section" id="keunggulan">
+  <div class="features-grid">
+    <div>
+      <span class="section-tag">Kenapa GGM Motor?</span>
+      <h2 class="section-title">Servis Terbaik,<br>Tanpa Repot ke Bengkel</h2>
+      <p class="section-sub" style="margin-bottom:36px;">Kami percaya servis kendaraan yang baik seharusnya mudah dan menyenangkan — bukan membuang waktu Anda.</p>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <span class="feature-num">01</span>
+          <div class="feature-content">
+            <h4>Mekanik Bersertifikat</h4>
+            <p>Tim mekanik kami berpengalaman dan terlatih untuk semua jenis merek kendaraan populer di Indonesia.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">02</span>
+          <div class="feature-content">
+            <h4>Harga Transparan</h4>
+            <p>Estimasi biaya diberikan sebelum pengerjaan dimulai. Tidak ada biaya tersembunyi atau kejutan tagihan.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">03</span>
+          <div class="feature-content">
+            <h4>Garansi Servis 7 Hari</h4>
+            <p>Setiap pekerjaan dilindungi garansi. Jika ada masalah dalam 7 hari, kami kembali tanpa biaya tambahan.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-num">04</span>
+          <div class="feature-content">
+            <h4>Spare Part Asli</h4>
+            <p>Kami hanya menggunakan spare part ori atau kualitas OEM terpercaya untuk menjaga performa kendaraan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features-visual">
+      <div class="fv-title">Cara Pesan Servis</div>
+      <div class="fv-sub">Cukup 4 langkah mudah</div>
+
+      <div class="step-list">
+        <div class="step">
+          <div class="step-dot">1</div>
+          <div class="step-text">
+            <h5>Hubungi via WhatsApp</h5>
+            <p>Ceritakan masalah kendaraan dan lokasi Anda</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-dot">2</div>
+          <div class="step-text">
+            <h5>Konfirmasi & Estimasi</h5>
+            <p>Kami berikan estimasi waktu dan biaya sebelum berangkat</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-dot">3</div>
+          <div class="step-text">
+            <h5>Mekanik Datang</h5>
+            <p>Mekanik tiba dalam 30–60 menit membawa peralatan lengkap</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-dot">4</div>
+          <div class="step-text">
+            <h5>Selesai & Bayar</h5>
+            <p>Kendaraan beres, bayar sesuai kesepakatan. Cash atau transfer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HARGA -->
+<section class="section" id="harga">
+  <div class="section-header">
+    <span class="section-tag">Paket Layanan</span>
+    <h2 class="section-title">Harga Terjangkau,<br>Kualitas Terjamin</h2>
+    <p class="section-sub">Pilih paket sesuai kebutuhan. Harga sudah termasuk ongkos kunjungan dalam area.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="price-tag-top">🏍️ Motor</div>
+      <h3>Servis Motor Dasar</h3>
+      <div class="price-amount">Rp 75.000</div>
+      <div class="price-note">Sudah termasuk kunjungan</div>
+      <ul class="price-list">
+        <li>Ganti oli mesin (oli sendiri)</li>
+        <li>Cek & setel karburator/injeksi</li>
+        <li>Cek busi & filter udara</li>
+        <li>Cek rantai & rem</li>
+        <li>Laporan kondisi kendaraan</li>
+      </ul>
+      <a href="https://wa.me/6208561485265?text=Halo%2C%20saya%20ingin%20pesan%20Servis%20Motor%20Dasar" target="_blank" class="price-cta price-cta-secondary">Pesan via WhatsApp</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-tag-top">🚗 Mobil <span class="price-featured-badge">TERLARIS</span></div>
+      <h3>Servis Mobil Lengkap</h3>
+      <div class="price-amount">Rp 175.000</div>
+      <div class="price-note">Sudah termasuk kunjungan</div>
+      <ul class="price-list">
+        <li>Ganti oli mesin (oli sendiri)</li>
+        <li>Cek filter oli, udara & bahan bakar</li>
+        <li>Cek sistem rem depan & belakang</li>
+        <li>Cek kelistrikan & aki</li>
+        <li>Cek ban & tekanan angin</li>
+        <li>Laporan lengkap kondisi kendaraan</li>
+      </ul>
+      <a href="https://wa.me/6208561485265?text=Halo%2C%20saya%20ingin%20pesan%20Servis%20Mobil%20Lengkap" target="_blank" class="price-cta price-cta-primary">Pesan via WhatsApp</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tag-top">⚡ Darurat</div>
+      <h3>Penanganan Darurat</h3>
+      <div class="price-amount">Sesuai Masalah</div>
+      <div class="price-note">Estimasi diberikan sebelum pengerjaan</div>
+      <ul class="price-list">
+        <li>Kendaraan mogok mendadak</li>
+        <li>Ban bocor / kempes</li>
+        <li>Aki soak, tidak bisa starter</li>
+        <li>Masalah kelistrikan darurat</li>
+        <li>Layanan derek tersedia</li>
+      </ul>
+      <a href="https://wa.me/6208561485265?text=DARURAT%21%20Kendaraan%20saya%20bermasalah%2C%20mohon%20bantuan%20segera" target="_blank" class="price-cta price-cta-secondary">Hubungi Sekarang</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- AREA -->
+<section class="area-section" id="area">
+  <span class="section-tag" style="color: rgba(255,255,255,0.5);">Jangkauan Layanan</span>
+  <h2 class="section-title" style="color: #fff; margin-bottom: 10px;">Area yang Kami Layani</h2>
+  <p class="section-sub">Kami melayani berbagai wilayah di area Bogor dan sekitarnya. Hubungi kami untuk konfirmasi area Anda.</p>
+
+  <div class="area-grid">
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Bogor Kota</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Bogor Utara</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Bogor Selatan</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Bogor Barat</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Bogor Timur</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Bogor Tengah</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Cibinong</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Depok</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Ciawi</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Cigombong</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Tajurhalang</span></div>
+    <div class="area-chip"><div class="area-chip-dot"></div><span>Parung</span></div>
+  </div>
+</section>
+
+<!-- KONTAK -->
+<section class="contact-section" id="kontak">
+  <div class="contact-inner">
+    <span class="section-tag" style="display:block; text-align:center;">Hubungi Kami</span>
+    <h2 class="section-title">Siap Bantu Kendaraan Anda<br>Sekarang Juga</h2>
+    <p class="section-sub">Jangan biarkan masalah kendaraan mengganggu aktivitas Anda. Satu pesan, mekanik kami segera hadir.</p>
+
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.36 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.11 1.2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 7.59 7.59l1.37-1.37a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <h4>WhatsApp / Telepon</h4>
+        <a href="https://wa.me/6208561485265" target="_blank">0856-1485-265</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h4>Jam Operasional</h4>
+        <p>Senin – Minggu, 24 Jam</p>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <h4>Basis Bengkel</h4>
+        <p>Bogor, Jawa Barat</p>
+      </div>
+    </div>
+
+    <a href="https://wa.me/6208561485265?text=Halo%20GGM%20Motor%2C%20saya%20butuh%20bantuan%20servis%20kendaraan" target="_blank" class="wa-big">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.516 3.659 1.412 5.178L2.05 22l4.96-1.302A9.963 9.963 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.336-1.276l-.311-.188-3.227.848.861-3.142-.203-.323A8 8 0 1112 20z"/>
+      </svg>
+      Chat WhatsApp Sekarang
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo-text">GGM<span>MOTOR</span></div>
+    <p>Jasa servis panggilan mobil dan motor terpercaya. Mekanik berpengalaman datang langsung ke lokasi Anda di Bogor dan sekitarnya.</p>
+  </div>
+
+  <div>
+    <h5>Layanan</h5>
+    <ul>
+      <li><a href="#layanan">Servis Mobil</a></li>
+      <li><a href="#layanan">Servis Motor</a></li>
+      <li><a href="#layanan">Servis Kelistrikan</a></li>
+      <li><a href="#layanan">Ganti Ban</a></li>
+      <li><a href="#layanan">Layanan Darurat</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <h5>Informasi</h5>
+    <ul>
+      <li><a href="#harga">Daftar Harga</a></li>
+      <li><a href="#area">Area Layanan</a></li>
+      <li><a href="#keunggulan">Cara Pesan</a></li>
+      <li><a href="https://wa.me/6208561485265" target="_blank">Hubungi Kami</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2025 GGM Motor – Servis Panggilan Mobil & Motor. Bogor, Jawa Barat.
+</div>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
